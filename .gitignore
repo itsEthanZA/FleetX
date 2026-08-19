@@ -26,3 +26,6 @@ dist/
 
 # Local database configuration
 appsettings.Development.json
+
+
+FleetX/FleetX.Api/appsettings.Development.json
