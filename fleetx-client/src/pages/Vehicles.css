@@ -1,0 +1,272 @@
+.vehicles-page {
+padding: 40px;
+color: #f5f5f5;
+min-height: 100%;
+}
+
+.vehicles-page .vehicles-header {
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+margin-bottom: 32px;
+}
+
+.vehicles-page .section-label {
+font-size: 11px;
+letter-spacing: 3px;
+color: #777;
+font-weight: 700;
+margin: 0 0 8px;
+}
+
+.vehicles-page h1 {
+font-size: 38px;
+margin: 0;
+color: #f5f5f5;
+}
+
+.vehicles-page .vehicles-subtitle {
+color: #777;
+margin: 8px 0 0;
+}
+
+.vehicles-page .add-vehicle-button {
+background: #ffffff;
+color: #111111;
+border: none;
+border-radius: 10px;
+padding: 13px 20px;
+font-weight: 700;
+cursor: pointer;
+}
+
+.vehicles-page .add-vehicle-button:hover {
+background: #e8e8e8;
+}
+
+.vehicles-page .vehicle-summary {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 16px;
+margin-bottom: 28px;
+}
+
+.vehicles-page .summary-card {
+background: #121315;
+border: 1px solid #242629;
+border-radius: 16px;
+padding: 22px;
+}
+
+.vehicles-page .summary-card span {
+display: block;
+color: #777;
+font-size: 13px;
+margin-bottom: 8px;
+}
+
+.vehicles-page .summary-card strong {
+font-size: 28px;
+color: #f5f5f5;
+}
+
+.vehicles-page .vehicles-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+gap: 24px;
+}
+
+.vehicles-page .vehicle-card {
+background: #121315;
+border: 1px solid #242629;
+border-radius: 20px;
+overflow: hidden;
+transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.vehicles-page .vehicle-card:hover {
+transform: translateY(-4px);
+border-color: #3a3d40;
+}
+
+.vehicles-page .vehicle-image-area {
+height: 330px;
+position: relative;
+background:
+radial-gradient(
+circle at center,
+#292c30 0%,
+#17191c 45%,
+#101113 100%
+);
+overflow: hidden;
+}
+
+.vehicles-page .vehicle-active {
+position: absolute;
+top: 18px;
+right: 18px;
+background: #dff7e7;
+color: #16713b;
+padding: 7px 12px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 700;
+z-index: 10;
+}
+
+.vehicles-page .vehicle-3d {
+position: absolute;
+inset: 0;
+width: 100%;
+height: 100%;
+}
+
+.vehicles-page .vehicle-3d canvas {
+width: 100% !important;
+height: 100% !important;
+display: block;
+}
+
+.vehicles-page .vehicle-card-body {
+padding: 24px;
+}
+
+.vehicles-page .vehicle-name-row {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+}
+
+.vehicles-page .vehicle-make {
+color: #777;
+text-transform: uppercase;
+letter-spacing: 2px;
+font-size: 11px;
+font-weight: 700;
+margin: 0 0 5px;
+}
+
+.vehicles-page .vehicle-name-row h2 {
+font-size: 28px;
+margin: 0;
+color: #f5f5f5;
+}
+
+.vehicles-page .vehicle-year {
+color: #888;
+font-size: 14px;
+}
+
+.vehicles-page .vehicle-variant {
+color: #888;
+margin: 7px 0 0;
+}
+
+.vehicles-page .vehicle-stats {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+margin-top: 24px;
+}
+
+.vehicles-page .vehicle-stats div {
+background: #191b1e;
+border-radius: 10px;
+padding: 13px;
+}
+
+.vehicles-page .vehicle-stats span {
+display: block;
+color: #707277;
+font-size: 11px;
+margin-bottom: 5px;
+}
+
+.vehicles-page .vehicle-stats strong {
+font-size: 14px;
+color: #f5f5f5;
+}
+
+.vehicles-page .vehicle-info-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+margin-top: 10px;
+}
+
+.vehicles-page .vehicle-info-row div {
+background: #191b1e;
+border-radius: 10px;
+padding: 13px;
+}
+
+.vehicles-page .vehicle-info-row span {
+display: block;
+color: #707277;
+font-size: 11px;
+margin-bottom: 5px;
+}
+
+.vehicles-page .vehicle-info-row strong {
+font-size: 14px;
+color: #f5f5f5;
+}
+
+.vehicles-page .view-vehicle-button {
+width: 100%;
+margin-top: 18px;
+padding: 14px;
+border: none;
+border-radius: 10px;
+background: #ffffff;
+color: #111111;
+font-weight: 700;
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 14px;
+}
+
+.vehicles-page .view-vehicle-button:hover {
+background: #e8e8e8;
+}
+
+@media (max-width: 900px) {
+.vehicles-page {
+padding: 25px;
+}
+
+.vehicles-page .vehicles-header {
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+}
+
+.vehicles-page .vehicle-summary {
+grid-template-columns: 1fr;
+}
+
+.vehicles-page .vehicles-grid {
+grid-template-columns: 1fr;
+}
+}
+
+@media (max-width: 600px) {
+.vehicles-page {
+padding: 18px;
+}
+
+.vehicles-page .vehicle-stats {
+grid-template-columns: 1fr;
+}
+
+.vehicles-page .vehicle-info-row {
+grid-template-columns: 1fr;
+}
+
+.vehicles-page .vehicle-image-area {
+height: 280px;
+}
+}
