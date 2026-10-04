@@ -4,7 +4,6 @@ import CarViewer from '../components/CarViewer'
 import PageLayout from '../components/PageLayout'
 import { getFuelLogs, getMaintenance, getVehicle } from '../services/api'
 import type { FuelLog, Maintenance, Vehicle } from '../services/api'
-import './VehicleDetails.css'
 
 export default function VehicleDetails() {
   const { id } = useParams(); const navigate = useNavigate()
