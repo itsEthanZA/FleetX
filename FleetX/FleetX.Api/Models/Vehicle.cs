@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace FleetX.Api.Models;
 
 public class Vehicle
@@ -16,7 +18,9 @@ public class Vehicle
 
     public VehicleModel? VehicleModel { get; set; }
 
+    [JsonIgnore]
     public ICollection<MaintenanceRecord> MaintenanceRecords { get; set; } = new List<MaintenanceRecord>();
 
+    [JsonIgnore]
     public ICollection<FuelLog> FuelLogs { get; set; } = new List<FuelLog>();
 }

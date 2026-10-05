@@ -8,7 +8,6 @@ public class MaintenanceRecord
 
     public int VehicleId { get; set; }
 
-    [JsonIgnore]
     public Vehicle? Vehicle { get; set; }
 
     public string ServiceType { get; set; } = string.Empty;
@@ -18,6 +17,8 @@ public class MaintenanceRecord
     public DateTime ServiceDate { get; set; }
 
     public DateTime? DueDate { get; set; }
+
+    public int? DueMileage { get; set; }
 
     public int Mileage { get; set; }
 

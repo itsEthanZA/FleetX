@@ -20,7 +20,7 @@ public class MaintenanceController(FleetXDbContext context) : ControllerBase
     public async Task<ActionResult<MaintenanceRecord>> Create(MaintenanceInput input)
     {
         if (!await context.Vehicles.AnyAsync(v => v.Id == input.VehicleId)) return BadRequest("Vehicle does not exist.");
-        var item = new MaintenanceRecord { VehicleId = input.VehicleId, ServiceType = input.ServiceType, Vendor = input.Vendor ?? string.Empty, ServiceDate = input.ServiceDate, DueDate = input.DueDate, Mileage = input.Mileage, Cost = input.Cost, Notes = input.Notes ?? string.Empty, Status = input.Status };
+        var item = new MaintenanceRecord { VehicleId = input.VehicleId, ServiceType = input.ServiceType, Vendor = input.Vendor ?? string.Empty, ServiceDate = input.ServiceDate, DueDate = input.DueDate, DueMileage = input.DueMileage, Mileage = input.Mileage, Cost = input.Cost, Notes = input.Notes ?? string.Empty, Status = input.Status };
         context.MaintenanceRecords.Add(item); await context.SaveChangesAsync();
         return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
     }
@@ -29,7 +29,7 @@ public class MaintenanceController(FleetXDbContext context) : ControllerBase
     public async Task<IActionResult> Update(int id, MaintenanceInput input)
     {
         var item = await context.MaintenanceRecords.FindAsync(id); if (item is null) return NotFound();
-        item.VehicleId = input.VehicleId; item.ServiceType = input.ServiceType; item.Vendor = input.Vendor ?? string.Empty; item.ServiceDate = input.ServiceDate; item.DueDate = input.DueDate; item.Mileage = input.Mileage; item.Cost = input.Cost; item.Notes = input.Notes ?? string.Empty; item.Status = input.Status;
+        item.VehicleId = input.VehicleId; item.ServiceType = input.ServiceType; item.Vendor = input.Vendor ?? string.Empty; item.ServiceDate = input.ServiceDate; item.DueDate = input.DueDate; item.DueMileage = input.DueMileage; item.Mileage = input.Mileage; item.Cost = input.Cost; item.Notes = input.Notes ?? string.Empty; item.Status = input.Status;
         await context.SaveChangesAsync(); return NoContent();
     }
 
@@ -44,6 +44,7 @@ public class MaintenanceInput
     [StringLength(100)] public string? Vendor { get; set; }
     public DateTime ServiceDate { get; set; }
     public DateTime? DueDate { get; set; }
+    [Range(0, int.MaxValue)] public int? DueMileage { get; set; }
     [Range(0, int.MaxValue)] public int Mileage { get; set; }
     [Range(0, 999999999)] public decimal Cost { get; set; }
     [StringLength(1000)] public string? Notes { get; set; }
