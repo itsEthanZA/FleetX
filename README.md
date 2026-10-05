@@ -1,113 +1,120 @@
-# FleetX 🚗
+# FleetX
 
-A modern full-stack fleet management system built to help businesses manage vehicles, drivers, maintenance, fuel usage and fleet operations from a single dashboard.
+FleetX helps a company owner manage its cars and drivers. Drivers log each completed trip. The owner can review distance travelled, fuel used, recorded costs, and service reminders.
 
-FleetX combines a C#/.NET REST API with a React frontend and an interactive 3D vehicle viewer.
+## What FleetX does
 
----
+- Store company cars, registration numbers, VINs, current mileage, and vehicle details.
+- Store driver profiles and optionally assign a regular car to each driver.
+- Record each completed trip with driver, car, start and return times, odometer readings, fuel used, and trip purpose.
+- Calculate trip distance from the odometer readings and update the car's current mileage.
+- Record service work and its cost, and set the next service date, odometer reading, or both.
+- Record fuel purchases separately from fuel used during trips.
+- Show monthly distance and fuel use by driver and car, plus all-time totals and costs.
+- View vehicle models in an interactive 3D viewer.
 
-## 🚀 Features
+## How to use it
 
-### Fleet Dashboard
-- Real-time fleet overview
-- Total vehicle statistics
-- Active vehicle tracking
-- Driver statistics
-- Maintenance alerts
-- Fleet health overview
+### Owner setup
 
-### 🚘 Vehicle Management
-- Add and manage fleet vehicles
-- Vehicle registration numbers
-- VIN tracking
-- Mileage tracking
-- Vehicle status
-- Vehicle specifications
-- Vehicle model management
+1. Open **Cars** and add each company car. Include its current odometer reading.
+2. Open **Drivers** and add each person who uses a car.
+3. When a car is serviced, use **Service schedule** to record the work and set its next service date or mileage limit.
 
-### 🛠 Maintenance Management
-- Track vehicle maintenance
-- Service types
-- Service providers
-- Service dates
-- Due dates
-- Maintenance costs
-- Maintenance status
-- Maintenance notes
+### Driver trip logging
 
-### ⛽ Fuel Management
-- Track fuel logs
-- Fuel spending
-- Vehicle fuel history
-- Fuel usage information
+After each completed drive, open **Driver trip log** and enter:
 
-### 👤 Driver Management
-- Driver profiles
-- Driver assignments
-- Licence information
-- Vehicle-driver relationships
+- The driver and car
+- The time the trip started and ended
+- The odometer reading before and after the trip
+- The fuel used and the reason for the trip
 
-### 🧾 Driver trip logs
-- Drivers record a completed trip with the car, start and end time, odometer readings, reason and fuel used
-- FleetX calculates the distance and updates the car's latest odometer reading
-- The owner overview summarizes distance and fuel by driver and car for the current month
-- Service records can include a next service date or mileage limit, which the owner can monitor
+FleetX calculates the distance travelled and updates the car's current mileage. The driver trip log records fuel used. **Fuel purchases** records fuel bought and its cost; these are separate records.
 
-### Typical day
-1. The owner adds cars and driver profiles.
-2. After each use, the driver opens **Driver trip log**, selects their name and car, and records the return odometer and fuel used.
-3. The owner checks **Owner overview** for monthly usage and service items, and **Owner reports** for all-time totals by car and driver.
+### Owner review
 
-Trip logs record fuel **used while driving**. The **Fuel purchases** page separately records fuel bought and its cost.
+- **Owner overview** shows current-month distance and fuel use by driver and car, and highlights service items approaching their date or mileage limit.
+- **Owner reports** shows all-time distance, fuel use, and recorded costs by car and driver.
+- **Service schedule** shows service records and the next service limit entered by the owner.
 
-To create the new trip log table and service mileage field in your configured SQL Server database, run this from `FleetX/FleetX.Api`:
+## Requirements
 
-```sh
+- .NET 8 SDK
+- Node.js and npm
+- SQL Server
+
+## Configure the database
+
+The API reads its SQL Server connection string from the `DefaultConnection` setting. Configure it in your local development settings or through the `ConnectionStrings__DefaultConnection` environment variable. Keep local credentials out of GitHub.
+
+For local development, put your own connection string in `FleetX/FleetX.Api/appsettings.Development.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost,1433;Database=FleetXDb;User Id=YOUR_USER;Password=YOUR_PASSWORD;TrustServerCertificate=True;"
+  }
+}
+```
+
+From the API project directory, create or update the database schema:
+
+```bash
+cd FleetX/FleetX.Api
 dotnet ef database update
 ```
 
-### 🚗 Interactive 3D Vehicles
-FleetX includes an interactive 3D vehicle viewer using GLB models.
+If the `dotnet ef` command is unavailable, install the matching Entity Framework tool once:
 
-Users can:
-- Rotate vehicles
-- Inspect vehicles in 3D
-- View different vehicle models
-- Explore the fleet visually
+```bash
+dotnet tool install --global dotnet-ef --version 8.0.13
+```
 
----
+The database update applies the checked-in migrations, including the trip log table and service mileage limit.
 
-## 🧰 Tech Stack
+## Run FleetX locally
 
-### Backend
+Open two terminals from the repository root.
 
-- C#
-- .NET 8
-- ASP.NET Core Web API
-- Entity Framework Core
-- SQL Server
-- Swagger / OpenAPI
+**Terminal 1: run the API**
 
-### Frontend
+```bash
+cd FleetX/FleetX.Api
+ASPNETCORE_ENVIRONMENT=Development dotnet run --no-launch-profile
+```
 
-- React
-- TypeScript
-- Vite
-- React Router
-- Three.js
-- React Three Fiber
-- React Three Drei
-- CSS
+The API listens at `http://localhost:5249`. Its Swagger page is available at `http://localhost:5249/swagger` when running in Development.
 
-### Architecture
+**Terminal 2: run the frontend**
+
+```bash
+cd fleetx-client
+npm install
+npm run dev
+```
+
+Open the local URL printed by Vite, usually `http://localhost:5173`.
+
+The frontend uses `http://localhost:5249/api` by default. To use a different API address, set `VITE_API_URL` for the frontend.
+
+## Technology
+
+- **Frontend:** React, TypeScript, Vite, React Router, Three.js
+- **API:** ASP.NET Core Web API on .NET 8
+- **Database:** SQL Server and Entity Framework Core
+
+## Project layout
 
 ```text
-React + TypeScript
-        │
-        │ REST API
-        ▼
-ASP.NET Core Web API
-        │
-        │ Entity Framework Core
-        ▼
-     SQL Server
+FleetX/
+├── FleetX/                 # .NET API, models, controllers, migrations
+│   └── FleetX.Api/
+└── fleetx-client/          # React and TypeScript frontend
+```
+
+## Current limitations
+
+- Trip details and fuel use are entered manually. FleetX does not track location by GPS or measure fuel automatically.
+- There are no individual user accounts or role permissions yet. A driver selects their name in the trip form, so the app does not verify the submitter or limit drivers to their own records.
+- Service reminders are based on the date or mileage limit entered in a service record.
